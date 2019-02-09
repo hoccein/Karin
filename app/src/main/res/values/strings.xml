@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Karin</string>
     <string name="generalError">عملیات ناموفق</string>
+    <string name="add">افزودن</string>
+    <string name="cancel">لغو</string>
+    <string name="successRegister">ثبت شد</string>
+    <string name="errorName">نام نباید خالی باشد</string>
+    <string name="errorPhone">شماره تلفن نباید خالی باشد</string>
 </resources>
