@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:gravity="center"
+       android:background="@color/blue"
+       android:orientation="horizontal"
+       tools:parentTag="android.widget.LinearLayout">
+
+    <ImageView
+            android:id="@+id/ivInc"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:background="@drawable/selector_counter"
+            android:src="@drawable/ic_remove"/>
+
+    <TextView
+            android:id="@+id/tvCount"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="0"/>
+
+    <ImageView
+            android:id="@+id/ivDec"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:background="@drawable/selector_counter"
+            android:src="@drawable/ic_add"/>
+
+</merge>

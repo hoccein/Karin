@@ -6,4 +6,5 @@
     <string name="successRegister">ثبت شد</string>
     <string name="errorName">نام نباید خالی باشد</string>
     <string name="errorPhone">شماره تلفن نباید خالی باشد</string>
+    <string name="register">ثبت</string>
 </resources>

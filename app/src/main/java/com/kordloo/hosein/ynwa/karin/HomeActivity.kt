@@ -13,7 +13,10 @@ import com.kordloo.hosein.ynwa.karin.db.CustomerDAO
 import com.kordloo.hosein.ynwa.karin.dialog.CustomerDialogFragment
 import com.kordloo.hosein.ynwa.karin.event.CustomerEvent
 import com.kordloo.hosein.ynwa.karin.model.Customer
+import com.kordloo.hosein.ynwa.karin.util.Keys
 import com.kordloo.hosein.ynwa.karin.util.Toaster
+import com.kordloo.hosein.ynwa.karin.util.Utils
+import kotlinx.android.synthetic.main.abc_alert_dialog_material.*
 import kotlinx.android.synthetic.main.activity_home.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -42,6 +45,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
                         dialog.dismiss()
                     }
                     .setNegativeButton("خرید") { dialog, which ->
+                        val intent = Intent(this@HomeActivity, ShopActivity::class.java)
+                        intent.putExtra(Keys.CUSTOMER, customer)
+                        startActivity(intent)
                         dialog.dismiss()
                     }
                     .show()

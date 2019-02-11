@@ -5,9 +5,10 @@
     <color name="colorAccent">#8e44ad</color>
     <color name="black">#000</color>
     <color name="white">#fff</color>
-    <color name="gray">#a1a1a1</color>
+    <color name="gray">#aeaeae</color>
 
     <color name="blue">#3498db</color>
+    <color name="blue_selector">#81b3d6</color>
     <color name="green">#16a085</color>
     <color name="yellow">#f1c40f</color>
     <color name="orange">#f39c12</color>

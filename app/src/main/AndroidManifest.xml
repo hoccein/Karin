@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.kordloo.hosein.ynwa.karin">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
             android:name=".MyApplication"
@@ -20,6 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".GalleryActivity">
+        </activity>
+        <activity android:name=".ShopActivity">
+        </activity>
+        <activity android:name=".FactorActivity">
         </activity>
     </application>
 

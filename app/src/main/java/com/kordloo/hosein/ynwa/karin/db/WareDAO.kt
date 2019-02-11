@@ -9,10 +9,11 @@ class WareDAO {
 
     fun save(ware: Ware) {
         realm.executeTransaction {
-            if (ware.id != 0.toLong())
-                ware.id = autoIncrementId(it)
+            val nextId = if (ware.id == 0.toLong())
+                autoIncrementId(it)
             else
-                ware.id = ware.id
+                ware.id
+            ware.id = nextId
             realm.copyToRealmOrUpdate(ware)
         }
     }

@@ -5,7 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.LinearLayout
+import com.kordloo.hosein.ynwa.karin.db.WareDAO
+import com.kordloo.hosein.ynwa.karin.model.Ware
 import com.kordloo.hosein.ynwa.karin.util.Toaster
 import com.kordloo.hosein.ynwa.karin.util.Utils
 import kotlinx.android.synthetic.main.activity_gallery.*
@@ -13,6 +16,9 @@ import java.io.File
 
 
 class GalleryActivity : AppCompatActivity() {
+
+    private var path = ""
+    private val wareDAO = WareDAO()
 
     companion object {
         const val REQ_Gallery = 100
@@ -35,6 +41,8 @@ class GalleryActivity : AppCompatActivity() {
         image.setOnClickListener {
             openGallery()
         }
+
+        add.setOnClickListener { onAddClick() }
     }
 
     private fun openGallery() {
@@ -44,17 +52,51 @@ class GalleryActivity : AppCompatActivity() {
         startActivityForResult(i, REQ_Gallery)
     }
 
+    private fun onAddClick() {
+        if (TextUtils.isEmpty(path)) {
+            Toaster.show("یک عکس انتخاب کنید")
+            return
+        }
+
+        if (TextUtils.isEmpty(etWare.text.toString())) {
+            Toaster.show("نام محصول را وارد کنید")
+            return
+        }
+
+        if (TextUtils.isEmpty(etMoney.text.toString())) {
+            Toaster.show("قیمت محصول را وارد کنید")
+            return
+        }
+
+        val ware = Ware(name = etWare.text.toString(), price = etMoney.text.toString(), path =  path)
+        wareDAO.save(ware)
+        resetViews()
+        Toaster.show(getString(R.string.successRegister))
+    }
+
+    private fun resetViews() {
+        path = ""
+        image.setImageResource(R.drawable.ic_image)
+        etWare.text = null
+        etMoney.text = null
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQ_Gallery && resultCode == Activity.RESULT_OK) {
             val imgUri = data?.data
-            val path = Utils.getPath(this, imgUri!!)
+            path = Utils.getPath(this, imgUri!!)
             val u = Uri.fromFile(File(path))
 
             Utils.loadImage(u, image)
         }
         else
             Toaster.show(getString(R.string.generalError))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        wareDAO.close()
     }
 
 }
