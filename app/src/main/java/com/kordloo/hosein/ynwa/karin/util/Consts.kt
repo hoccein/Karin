@@ -8,6 +8,19 @@ import com.kordloo.hosein.ynwa.karin.MyApplication
 import com.kordloo.hosein.ynwa.karin.R
 import com.squareup.picasso.Picasso
 import java.text.DecimalFormat
+import com.itextpdf.text.DocumentException
+import com.itextpdf.text.BadElementException
+import com.itextpdf.text.Document
+import com.itextpdf.text.Image
+import java.io.IOException
+import java.net.MalformedURLException
+import android.graphics.drawable.Drawable
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.opengl.ETC1.getHeight
+import android.view.View
+
 
 class Utils {
 
@@ -74,6 +87,47 @@ class Utils {
             }
             return result
         }
+
+        fun getBitmapFromView(view: View): Bitmap {
+            //Define a bitmap with the same size as the view
+            val returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888)
+            //Bind a canvas to it
+            val canvas = Canvas(returnedBitmap)
+            //Get the view's background
+            val bgDrawable = view.getBackground()
+            if (bgDrawable != null)
+            //has background drawable, then draw it on the canvas
+                bgDrawable!!.draw(canvas)
+            else
+            //does not have background drawable, then draw white background on the canvas
+                canvas.drawColor(Color.WHITE)
+            // draw the view on the canvas
+            view.draw(canvas)
+            //return the bitmap
+            return returnedBitmap
+        }
+
+        fun addImage(document: Document, byteArray: ByteArray) {
+            var image: Image? = null
+            try {
+                image = Image.getInstance(byteArray)
+            } catch (e: BadElementException) {
+                e.printStackTrace()
+            } catch (e: MalformedURLException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+            // image.scaleAbsolute(150f, 150f);
+            try {
+                document.add(image)
+            } catch (e: DocumentException) {
+                e.printStackTrace()
+            }
+
+        }
+
     }
 }
 

@@ -1,146 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+
+
+<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".FactorActivity">
 
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_centerHorizontal="true"
-              android:layout_margin="10dp"
-              android:textColor="@color/black"
-              android:textSize="16sp"
-              android:text="فاکتور"/>
-
-    <TextView
-            android:id="@+id/tvCustomer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/black"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            android:text="نام / موبایل"/>
-
-    <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="16dp"
-            android:textColor="@color/black"
-            android:textSize="19sp"
-            android:textStyle="bold"
-            android:text="تاریخ"/>
-
-    <LinearLayout
+    <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCustomer"
-            android:layoutDirection="rtl"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/black"/>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:layout_margin="16dp"
+                  android:textColor="@color/black"
+                  android:textSize="16sp"
+                  android:text="فاکتور"/>
+
+        <TextView
+                android:id="@+id/tvCustomer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/black"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:text="نام / موبایل"/>
+
+        <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginTop="60dp"
+                android:layout_marginLeft="16dp"
+                android:textColor="@color/black"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:text="تاریخ"/>
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-            <TextView android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="0.7"
-                      android:layout_margin="8dp"
-                      android:gravity="center"
-                      android:textColor="@color/black"
-                      android:textSize="14sp"
-                      android:textStyle="bold"
-                      android:text="ردیف"/>
+                android:layout_below="@+id/tvCustomer"
+                android:layoutDirection="rtl"
+                android:orientation="vertical">
 
             <ImageView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black"/>
 
-            <TextView android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="2.3"
-                      android:layout_margin="8dp"
-                      android:gravity="center"
-                      android:textColor="@color/black"
-                      android:textSize="14sp"
-                      android:textStyle="bold"
-                      android:text="نام کالا"/>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                <TextView android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="0.7"
+                          android:layout_margin="8dp"
+                          android:gravity="center"
+                          android:textColor="@color/black"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:text="ردیف"/>
+
+                <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray"/>
+
+                <TextView android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="2.3"
+                          android:layout_margin="8dp"
+                          android:gravity="center"
+                          android:textColor="@color/black"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:text="نام کالا"/>
+
+                <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray"/>
+
+                <TextView android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1"
+                          android:layout_margin="8dp"
+                          android:gravity="center"
+                          android:textColor="@color/black"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:text="قیمت واحد"/>
+
+                <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray"/>
+
+                <TextView android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="0.7"
+                          android:layout_margin="8dp"
+                          android:gravity="center"
+                          android:textColor="@color/black"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:text="تعداد"/>
+
+                <ImageView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray"/>
+
+                <TextView android:layout_width="0dp"
+                          android:layout_height="wrap_content"
+                          android:layout_weight="1.5"
+                          android:layout_margin="8dp"
+                          android:gravity="center"
+                          android:textColor="@color/black"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:text="قیمت تومان"/>
+
+            </LinearLayout>
 
             <ImageView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:background="@color/gray"/>
 
-            <TextView android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:layout_margin="8dp"
-                      android:gravity="center"
-                      android:textColor="@color/black"
-                      android:textSize="14sp"
-                      android:textStyle="bold"
-                      android:text="قیمت واحد"/>
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <ImageView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray"/>
+            </android.support.v7.widget.RecyclerView>
 
-            <TextView android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="0.7"
-                      android:layout_margin="8dp"
-                      android:gravity="center"
-                      android:textColor="@color/black"
-                      android:textSize="14sp"
-                      android:textStyle="bold"
-                      android:text="تعداد"/>
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
 
-            <ImageView
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/gray"/>
+                <TextView
+                        android:id="@+id/tvTotalWares"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:text="تعداد کل :"/>
 
-            <TextView android:layout_width="0dp"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1.5"
-                      android:layout_margin="8dp"
-                      android:gravity="center"
-                      android:textColor="@color/black"
-                      android:textSize="14sp"
-                      android:textStyle="bold"
-                      android:text="قیمت تومان"/>
+                <TextView
+                        android:id="@+id/tvTotalPrize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvTotalWares"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:text="مبلغ کل :"/>
+
+                <TextView
+                        android:id="@+id/tvCheckPrize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvTotalPrize"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginRight="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:text="مبلغ چک : "/>
+
+                <TextView
+                        android:id="@+id/tvNaghdPrize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvCheckPrize"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="16dp"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:text="مبلغ نقد : "/>
+
+                <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/tvTotalWares"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="30dp"
+                        android:lineSpacingExtra="8sp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:text="کالا صحیح و سالم تحویل گردید "/>
+
+                <TextView
+                        android:layout_width="140dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/tvTotalPrize"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginLeft="30dp"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:text="مهر و امضاء"/>
+
+            </RelativeLayout>
+
+            <Button
+                    android:id="@+id/btnRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="60dp"
+                    android:padding="16dp"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:text="ثبت نهایی"/>
 
         </LinearLayout>
 
-        <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/gray"/>
+    </RelativeLayout>
 
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
-
-
-    </LinearLayout>
-
-</RelativeLayout>
+</ScrollView>
