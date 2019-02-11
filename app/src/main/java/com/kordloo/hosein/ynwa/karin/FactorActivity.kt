@@ -23,8 +23,7 @@ import java.io.FileOutputStream
 import java.lang.Exception
 import android.widget.RelativeLayout
 import android.view.LayoutInflater
-
-
+import android.widget.ScrollView
 
 
 class FactorActivity : AppCompatActivity() {
@@ -107,7 +106,7 @@ class FactorActivity : AppCompatActivity() {
 
         val inflater = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         //RelativeLayout is root view of my UI(xml) file.
-        val root = inflater.inflate(R.layout.activity_factor, null) as RelativeLayout
+        val root = inflater.inflate(R.layout.activity_factor, null) as ScrollView
         root.isDrawingCacheEnabled = true
         // here give id of our root layout (here its my RelativeLayout's id)
         val screen = Utils.getBitmapFromView(this.window.findViewById(R.id.root))

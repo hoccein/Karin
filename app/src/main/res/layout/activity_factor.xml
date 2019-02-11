@@ -150,14 +150,14 @@
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp">
+                    android:layout_marginTop="10dp">
 
                 <TextView
                         android:id="@+id/tvTotalWares"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_margin="16dp"
+                        android:layout_marginRight="16dp"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:text="تعداد کل :"/>
@@ -168,6 +168,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvTotalWares"
                         android:layout_alignParentRight="true"
+                        android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:textColor="@color/black"
                         android:textSize="20sp"
@@ -179,9 +180,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvTotalPrize"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignTop="@+id/tvTotalWares"
+                        android:layout_marginLeft="16dp"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:text="مبلغ چک : "/>
@@ -191,19 +192,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvCheckPrize"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="16dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="16dp"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:text="مبلغ نقد : "/>
 
                 <TextView
-                        android:layout_width="140dp"
+                        android:id="@+id/txtZemanat"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/tvTotalWares"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginTop="20dp"
+                        android:layout_below="@+id/tvNaghdPrize"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="12dp"
                         android:layout_marginLeft="30dp"
                         android:lineSpacingExtra="8sp"
                         android:gravity="center"
@@ -214,9 +216,9 @@
                 <TextView
                         android:layout_width="140dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/tvTotalPrize"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginTop="40dp"
+                        android:layout_below="@+id/txtZemanat"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="8dp"
                         android:layout_marginLeft="30dp"
                         android:gravity="center"
                         android:textColor="@color/black"

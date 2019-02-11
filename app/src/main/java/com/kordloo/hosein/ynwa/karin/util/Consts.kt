@@ -45,6 +45,10 @@ class Utils {
             return context.resources.displayMetrics.widthPixels
         }
 
+        fun getHeight(): Int {
+            return context.resources.displayMetrics.heightPixels
+        }
+
         fun loadImage(uri: Uri, imageView: ImageView) {
             Picasso.get()
                 .load(uri)
@@ -119,7 +123,7 @@ class Utils {
                 e.printStackTrace()
             }
 
-            // image.scaleAbsolute(150f, 150f);
+             image?.scaleAbsolute(Utils.getWidth().toFloat()/2, Utils.getHeight().toFloat()/2)
             try {
                 document.add(image)
             } catch (e: DocumentException) {
