@@ -11,6 +11,7 @@ import com.kordloo.hosein.ynwa.karin.OnItemListener
 import com.kordloo.hosein.ynwa.karin.R
 import com.kordloo.hosein.ynwa.karin.event.CustomerEvent
 import com.kordloo.hosein.ynwa.karin.model.Customer
+import com.kordloo.hosein.ynwa.karin.util.Keys
 import com.kordloo.hosein.ynwa.karin.util.Toaster
 import com.kordloo.hosein.ynwa.karin.util.Utils
 import kotlinx.android.synthetic.main.dialog_frag_customer.*
@@ -19,6 +20,7 @@ import org.greenrobot.eventbus.EventBus
 class CustomerDialogFragment : DialogFragment() {
 
     private var onItemListener: OnItemListener<Customer>? = null
+    private var customer = Customer()
 
     fun clickOnItemListener(onItemListener: OnItemListener<Customer>) {
         this.onItemListener = onItemListener
@@ -41,6 +43,12 @@ class CustomerDialogFragment : DialogFragment() {
         dialog.window?.attributes = params as android.view.WindowManager.LayoutParams
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (arguments?.get(Keys.CUSTOMER) != null)
+            customer = arguments?.get(Keys.CUSTOMER) as Customer
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
        val v = inflater.inflate(R.layout.dialog_frag_customer, container, false)
         isCancelable = false
@@ -48,6 +56,11 @@ class CustomerDialogFragment : DialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (customer.id > 0 && !TextUtils.isEmpty((customer.name))) {
+            name.setText(customer.name)
+            phone.setText(customer.phone)
+            address.setText(customer.address)
+        }
         cancel.setOnClickListener {
             dismiss()
         }
@@ -64,7 +77,7 @@ class CustomerDialogFragment : DialogFragment() {
                 return@setOnClickListener
             }
             val cAddress = address.text.toString()
-            val customer = Customer(name = cName, phone = cPhone, address = cAddress)
+            customer = Customer(customer.id, cName, cPhone, cAddress)
             EventBus.getDefault().post(CustomerEvent(customer))
             dismiss()
         }

@@ -22,17 +22,29 @@
                   android:text="فاکتور"/>
 
         <TextView
-                android:id="@+id/tvCustomer"
+                android:id="@+id/tvCustomerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="60dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="20dp"
                 android:textColor="@color/black"
-                android:textSize="19sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="نام / موبایل"/>
+                android:text="نام" />
+
+        <TextView
+                android:id="@+id/tvCustomerPhoneAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvCustomerName"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
         <TextView
                 android:id="@+id/tvDate"
@@ -49,7 +61,7 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvCustomer"
+                android:layout_below="@+id/tvCustomerPhoneAddress"
                 android:layoutDirection="rtl"
                 android:orientation="vertical">
 
@@ -184,8 +196,8 @@
                         android:layout_alignTop="@+id/tvTotalWares"
                         android:layout_marginLeft="16dp"
                         android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:text="مبلغ چک : "/>
+                        android:textSize="16sp"
+                        android:text="مبلغ چک :                                                    "/>
 
                 <TextView
                         android:id="@+id/tvNaghdPrize"
@@ -196,8 +208,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="16dp"
                         android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:text="مبلغ نقد : "/>
+                        android:textSize="16sp"
+                        android:text="مبلغ نقد :                                                    "/>
 
                 <TextView
                         android:id="@+id/txtZemanat"
@@ -205,7 +217,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvNaghdPrize"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="12dp"
+                        android:paddingTop="16dp"
                         android:layout_marginLeft="30dp"
                         android:lineSpacingExtra="8sp"
                         android:gravity="center"
@@ -239,6 +251,12 @@
                     android:textSize="25sp"
                     android:textStyle="bold"
                     android:text="ثبت نهایی"/>
+
+            <ProgressBar
+                    android:id="@+id/progressbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
 
         </LinearLayout>
 

@@ -1,11 +1,9 @@
 package com.kordloo.hosein.ynwa.karin
 
-import android.content.DialogInterface
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.kordloo.hosein.ynwa.karin.adapter.CustomerAdapter
@@ -14,9 +12,6 @@ import com.kordloo.hosein.ynwa.karin.dialog.CustomerDialogFragment
 import com.kordloo.hosein.ynwa.karin.event.CustomerEvent
 import com.kordloo.hosein.ynwa.karin.model.Customer
 import com.kordloo.hosein.ynwa.karin.util.Keys
-import com.kordloo.hosein.ynwa.karin.util.Toaster
-import com.kordloo.hosein.ynwa.karin.util.Utils
-import kotlinx.android.synthetic.main.abc_alert_dialog_material.*
 import kotlinx.android.synthetic.main.activity_home.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -26,6 +21,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
 
     private val adapter = CustomerAdapter()
     private val customerDAO = CustomerDAO()
+    private var isEdit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +38,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
                 AlertDialog.Builder(this@HomeActivity)
                     .setTitle(customer.name)
                     .setPositiveButton("فاکتور های قبلی") { dialog, which ->
+                        goToArchiveListActivity(customer.id)
                         dialog.dismiss()
                     }
                     .setNegativeButton("خرید") { dialog, which ->
@@ -51,6 +48,13 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
                         dialog.dismiss()
                     }
                     .show()
+            }
+        })
+        // Edit listener
+        adapter.setOnEditListener(object: OnItemListener<Customer> {
+            override fun onClicked(customer: Customer) {
+                isEdit = true
+                openCustomerDialog(customer)
             }
         })
         // Long click for remove item
@@ -77,7 +81,14 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
         fab.setOnClickListener(this)
     }
 
-    private fun openCustomerDialog() {
+    private fun goToArchiveListActivity(customerId: Long) {
+        val i = Intent(this, ArchiveListActivity::class.java)
+        i.putExtra(Keys.CUSTOMER_ARCHIVE, 1000)
+        i.putExtra(Keys.CUSTOMER, customerId)
+        startActivity(i)
+    }
+
+    private fun openCustomerDialog(customer: Customer = Customer()) {
         val TAG = "dialog_customer"
         val fm = supportFragmentManager
         val ft = supportFragmentManager.beginTransaction()
@@ -87,6 +98,11 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
             ft.remove(fragment)
 
         val customerDialogFragment = CustomerDialogFragment()
+        if (isEdit) {
+            val b = Bundle()
+            b.putParcelable(Keys.CUSTOMER, customer)
+            customerDialogFragment.arguments = b
+        }
         customerDialogFragment.show(ft, TAG)
     }
 
@@ -106,6 +122,12 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
     fun onEventCustomer(customerEvent: CustomerEvent) {
         customerDAO.save(customerEvent.customer)
         adapter.addCustomer(customerEvent.customer)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (adapter != null)
+            adapter.setList(customerDAO.findAll()!!)
     }
 
     override fun onStart() {

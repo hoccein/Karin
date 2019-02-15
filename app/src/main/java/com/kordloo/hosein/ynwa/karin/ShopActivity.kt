@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.view.View
 import com.kordloo.hosein.ynwa.karin.adapter.ShopAdapter
 import com.kordloo.hosein.ynwa.karin.db.WareDAO
 import com.kordloo.hosein.ynwa.karin.model.Customer
@@ -46,11 +47,19 @@ class ShopActivity : AppCompatActivity(), OnShopItemListener<Ware, String> {
         recycler.adapter = adapter
 
         val list = wareDAO.findAll()
-        adapter.setList(list!!)
+        if (list != null && list.size > 0)
+            adapter.setList(list)
+        else
+            tvEmptyList.visibility = View.VISIBLE
 
         btnRegister.setOnClickListener {
+            val finalOrderList = arrayListOf<Order>()
+            for (o in orderList) {
+                if (o.count != 0)
+                    finalOrderList.add(o)
+            }
            if (sumWareNumbers > 0) {
-               val finalOrder = FinalOrder(customer, orderList, date, sumWarePrize, sumWareNumbers)
+               val finalOrder = FinalOrder(customer, finalOrderList, date, sumWarePrize, sumWareNumbers)
                val intent = Intent(this, FactorActivity::class.java)
                intent.putExtra(Keys.REGISTER_ORDER, finalOrder)
                startActivity(intent)

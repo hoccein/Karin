@@ -1,33 +1,35 @@
 package com.kordloo.hosein.ynwa.karin
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
+import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ScrollView
+import com.itextpdf.text.Document
+import com.itextpdf.text.pdf.PdfWriter
 import com.kordloo.hosein.ynwa.karin.adapter.FactorAdapter
-import com.kordloo.hosein.ynwa.karin.model.FinalOrder
+import com.kordloo.hosein.ynwa.karin.db.ArchiveDAO
+import com.kordloo.hosein.ynwa.karin.model.*
 import com.kordloo.hosein.ynwa.karin.util.Keys
 import com.kordloo.hosein.ynwa.karin.util.Toaster
 import com.kordloo.hosein.ynwa.karin.util.Utils
+import io.realm.RealmList
 import kotlinx.android.synthetic.main.activity_factor.*
-import android.system.Os.mkdir
-import java.io.File
-import java.nio.file.Files.exists
-import android.graphics.Bitmap
-import com.itextpdf.text.Document
-import com.itextpdf.text.pdf.PdfWriter
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.FileOutputStream
-import java.lang.Exception
-import android.widget.RelativeLayout
-import android.view.LayoutInflater
-import android.widget.ScrollView
 
 
 class FactorActivity : AppCompatActivity() {
 
+    private var archiveDAO = ArchiveDAO()
     private var finalOrder = FinalOrder()
     private val adapter = FactorAdapter()
 
@@ -38,49 +40,108 @@ class FactorActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        finalOrder = intent.getParcelableExtra(Keys.REGISTER_ORDER)
-
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
-        adapter.setList(finalOrder.orderList)
+        progressbar.visibility = View.GONE
 
-        val name = finalOrder.customer.name
-        val phone = finalOrder.customer.phone
-        tvCustomer.text = "$name  $phone"
+        val type = intent.getIntExtra("ArchiveListActivity", -1)
+        val archive = intent.getParcelableExtra<ArchiveParc>(Keys.CUSTOMER_ARCHIVE)
+        if (type == 2000) {
+            val orderList = ArrayList<Order>()
+            for (i in archive.wares) {
+                val order = Order(i.wareName, i.warePrice, i.wareCount)
+                orderList.add(order)
+            }
+            setList(orderList)
+            customerInfo(archive.customerName, archive.customerPhone)
+            date(archive.date)
+            totalWares(archive.totalWares)
+            totalPrize(archive.totalPrize)
+        }
+        else {
+            finalOrder = intent.getParcelableExtra(Keys.REGISTER_ORDER)
+            setList(finalOrder.orderList)
+            customerInfo(finalOrder.customer.name, finalOrder.customer.phone, finalOrder.customer.address)
+            date(finalOrder.date)
+            totalWares(finalOrder.totalWares)
+            totalPrize(finalOrder.totalPrize)
+        }
 
-        tvDate.text = "تاریخ : ${finalOrder.date}"
-
-        val totalWares = Utils.formatCurrency(finalOrder.totalWares)
-        tvTotalWares.text = "تعداد کل :  $totalWares  عدد"
-
-        val totalPrize = Utils.formatCurrency(finalOrder.totalPrize)
-        tvTotalPrize.text = "مبلغ کل :  $totalPrize تومان "
 
         tvCheckPrize.setOnClickListener {
-            onCheckPrize()
+//            onCheckPrize()
         }
 
         tvNaghdPrize.setOnClickListener {
-            onNaghdPrize()
+//            onNaghdPrize()
         }
+
+        btnRegister.visibility = if (type == 2000)
+            View.GONE
+        else
+            View.VISIBLE
 
         btnRegister.setOnClickListener {
-            onRegister()
+            progressbar.visibility = View.VISIBLE
+            btnRegister.isEnabled = false
+            saveToDB()
+            Handler().postDelayed({ savePdf() }, 1500)
         }
 
     }
 
-
-    private fun onCheckPrize() {
-
+    private fun setList(orderList: ArrayList<Order>) {
+        adapter.setList(orderList)
     }
 
-    private fun onNaghdPrize() {
-
+    private fun customerInfo(name: String, phone: String, address: String = "") {
+        tvCustomerName.text = name
+        if (!TextUtils.isEmpty(address))
+            tvCustomerPhoneAddress.text = "$address - $phone"
+        else {
+            tvCustomerName.text = "$name - $phone"
+            tvCustomerPhoneAddress.visibility = View.GONE
+        }
     }
 
+    private fun date(date: String) {
+        tvDate.text = "تاریخ : $date"
+    }
 
-    private fun onRegister() {
+    private fun totalWares(totalWares: Int) {
+        val total = Utils.formatCurrency(totalWares)
+        tvTotalWares.text = "تعداد کل :  $total  عدد"
+    }
+
+    private fun totalPrize(totalPrize: Int) {
+        val total = Utils.formatCurrency(totalPrize)
+        tvTotalPrize.text = "مبلغ کل :  $total تومان "
+    }
+
+    private fun saveToDB() {
+        val wareNames = RealmList<String>()
+        val warePrices = RealmList<String>()
+        val wareCounts = RealmList<Int>()
+        for (fo in finalOrder.orderList) {
+            wareNames.add(fo.Ware.name)
+            warePrices.add(fo.Ware.price)
+            wareCounts.add(fo.count)
+        }
+        val archive = Archive(0,
+            finalOrder.customer.id,
+            finalOrder.customer.name,
+            finalOrder.customer.phone,
+            finalOrder.customer.address,
+            wareNames,
+            warePrices,
+            wareCounts,
+            finalOrder.date,
+            finalOrder.totalWares,
+            finalOrder.totalPrize)
+        archiveDAO.save(archive)
+    }
+
+    private fun savePdf() {
         //First Check if the external storage is writable
         val state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED != state) {
@@ -121,9 +182,22 @@ class FactorActivity : AppCompatActivity() {
             val byteArray= stream.toByteArray()
             Utils.addImage(document,byteArray)
             document.close()
+            progressbar.visibility = View.GONE
+            Toaster.show("ثبت شد")
+            Handler().postDelayed({goToHome()}, 1000)
         }
         catch (e: Exception){
             e.printStackTrace()
         }
+    }
+
+    private fun goToHome() {
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        archiveDAO.close()
     }
 }

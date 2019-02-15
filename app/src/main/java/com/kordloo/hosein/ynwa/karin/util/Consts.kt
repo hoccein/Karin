@@ -138,4 +138,5 @@ class Utils {
 object Keys {
     const val CUSTOMER = "Key_Customer"
     const val REGISTER_ORDER = "REGISTER_ORDER"
+    const val CUSTOMER_ARCHIVE = "CUSTOMER_ARCHIVE"
 }

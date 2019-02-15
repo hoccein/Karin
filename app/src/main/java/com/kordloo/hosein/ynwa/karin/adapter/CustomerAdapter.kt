@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import com.kordloo.hosein.ynwa.karin.OnItemListener
 import com.kordloo.hosein.ynwa.karin.OnLongItemListener
@@ -16,10 +17,15 @@ class CustomerAdapter : RecyclerView.Adapter<CustomerAdapter.MyVH>() {
 
     private var list: MutableList<Customer>? = null
     private var onItemListener: OnItemListener<Customer>? = null
+    private var onEditListener: OnItemListener<Customer>? = null
     private var onLongItemListener: OnLongItemListener<Customer, Int>? = null
 
     fun setOnItemListener(onItemListener: OnItemListener<Customer>) {
         this.onItemListener = onItemListener
+    }
+
+    fun setOnEditListener(onEditListener: OnItemListener<Customer>) {
+        this.onEditListener = onEditListener
     }
 
     fun setOnLongItemListener(onLongItemListener: OnLongItemListener<Customer, Int>) {
@@ -51,7 +57,7 @@ class CustomerAdapter : RecyclerView.Adapter<CustomerAdapter.MyVH>() {
     }
 
     override fun onBindViewHolder(holder: MyVH, position: Int) {
-        holder.onBind(list?.get(position)!!, onItemListener!!, onLongItemListener!!)
+        holder.onBind(list?.get(position)!!, onItemListener!!, onLongItemListener!!, onEditListener!!)
     }
 
     override fun getItemCount(): Int {
@@ -66,21 +72,25 @@ class CustomerAdapter : RecyclerView.Adapter<CustomerAdapter.MyVH>() {
 
         private var customer: Customer? = null
         private var onItemListener: OnItemListener<Customer>? = null
+        private var onEditListener: OnItemListener<Customer>? = null
         private var onLongItemListener: OnLongItemListener<Customer, Int>? = null
         var cv = itemView.findViewById(R.id.cv) as CardView
         var name = itemView.findViewById(R.id.name) as TextView
         var phone = itemView.findViewById(R.id.phone) as TextView
         var address = itemView.findViewById(R.id.address) as TextView
+        var edit = itemView.findViewById(R.id.ivEdit) as ImageView
 
         init {
             itemView.setOnClickListener(this)
+            edit.setOnClickListener(this)
             itemView.setOnLongClickListener(this)
         }
 
         fun onBind(customer: Customer, onItemListener: OnItemListener<Customer>,
-                   onLongItemListener: OnLongItemListener<Customer, Int>) {
+                   onLongItemListener: OnLongItemListener<Customer, Int>, onEditListener: OnItemListener<Customer>) {
             this.customer = customer
             this.onItemListener = onItemListener
+            this.onEditListener = onEditListener
             this.onLongItemListener = onLongItemListener
 
             name.text = customer.name
@@ -94,7 +104,10 @@ class CustomerAdapter : RecyclerView.Adapter<CustomerAdapter.MyVH>() {
         }
 
         override fun onClick(v: View?) {
-            onItemListener?.onClicked(customer!!)
+            if (v == edit)
+                onEditListener?.onClicked(customer!!)
+            else
+                onItemListener?.onClicked(customer!!)
         }
 
         override fun onLongClick(v: View?): Boolean {

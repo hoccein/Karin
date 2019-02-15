@@ -68,11 +68,24 @@
     <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintBottom_toTopOf="@+id/layout_register"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.0"/>
+
+    <TextView
+            android:id="@+id/tvEmptyList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="30dp"
+            android:textSize="30sp"
+            android:textColor="@color/colorAccent"
+            android:text="کالایی ثبت نشده"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/recycler"/>
 
     <FrameLayout
             android:id="@+id/layout_register"

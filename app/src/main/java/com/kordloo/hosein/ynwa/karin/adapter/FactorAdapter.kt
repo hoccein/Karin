@@ -46,6 +46,7 @@ class FactorAdapter : RecyclerView.Adapter<FactorAdapter.MyVH>() {
 
         fun onBind(order: Order, position: Int) {
             row.text = (position + 1).toString()
+
             wareName.text = order.Ware.name
             fee.text = Utils.formatCurrency(order.Ware.price.toInt())
             totalWares.text = order.count.toString()
