@@ -33,7 +33,7 @@ class CustomerAdapter : RecyclerView.Adapter<CustomerAdapter.MyVH>() {
     }
 
     fun setList(list: MutableList<Customer>) {
-        if (list == null)
+        if (list == null && list.size > 0)
             return
         this.list?.clear()
         this.list = list

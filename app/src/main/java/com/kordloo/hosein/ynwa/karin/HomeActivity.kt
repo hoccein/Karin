@@ -77,8 +77,9 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
         })
         recycler.adapter = adapter
 
-        ivGallery.setOnClickListener(this)
         fab.setOnClickListener(this)
+        ivAddWare.setOnClickListener(this)
+        ivGallery.setOnClickListener(this)
     }
 
     private fun goToArchiveListActivity(customerId: Long) {
@@ -111,6 +112,10 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
             fab -> {
                 openCustomerDialog()
             }
+            ivAddWare -> {
+                val i = Intent(this, AddImageActivity::class.java)
+                startActivity(i)
+            }
             ivGallery -> {
                 val i = Intent(this, GalleryActivity::class.java)
                 startActivity(i)
@@ -122,12 +127,6 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener{
     fun onEventCustomer(customerEvent: CustomerEvent) {
         customerDAO.save(customerEvent.customer)
         adapter.addCustomer(customerEvent.customer)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (adapter != null)
-            adapter.setList(customerDAO.findAll()!!)
     }
 
     override fun onStart() {

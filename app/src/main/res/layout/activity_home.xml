@@ -19,6 +19,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+                android:id="@+id/ivAddWare"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_add_to_photos"
+                android:layout_gravity="right|center"/>
+
+        <ImageView
                 android:id="@+id/ivGallery"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

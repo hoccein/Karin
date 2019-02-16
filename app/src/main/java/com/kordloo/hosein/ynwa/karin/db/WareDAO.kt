@@ -37,6 +37,12 @@ class WareDAO {
         }
     }
 
+    fun delete(id: Long) {
+        realm.executeTransaction {
+            it.where(Ware::class.java).equalTo("id", id).findFirst()?.deleteFromRealm()
+        }
+    }
+
     fun close() {
         realm.close()
     }

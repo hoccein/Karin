@@ -49,8 +49,10 @@ class ShopActivity : AppCompatActivity(), OnShopItemListener<Ware, String> {
         val list = wareDAO.findAll()
         if (list != null && list.size > 0)
             adapter.setList(list)
-        else
+        else {
+            recycler.visibility = View.GONE
             tvEmptyList.visibility = View.VISIBLE
+        }
 
         btnRegister.setOnClickListener {
             val finalOrderList = arrayListOf<Order>()
@@ -63,6 +65,7 @@ class ShopActivity : AppCompatActivity(), OnShopItemListener<Ware, String> {
                val intent = Intent(this, FactorActivity::class.java)
                intent.putExtra(Keys.REGISTER_ORDER, finalOrder)
                startActivity(intent)
+               finish()
            }
             else
                Toaster.show("موردی انتخاب نکرده اید")
