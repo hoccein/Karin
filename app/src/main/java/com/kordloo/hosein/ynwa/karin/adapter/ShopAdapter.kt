@@ -55,6 +55,7 @@ class ShopAdapter : RecyclerView.Adapter<ShopAdapter.MyVH>() {
 
         private var onShopItemListener: OnShopItemListener<Ware, String>? = null
         private var ware: Ware? = null
+        private var hashSet = mutableSetOf<Int>()
 
         val cv = itemView.findViewById(R.id.cv) as CardView
         val image = itemView.findViewById(R.id.image) as ImageView
@@ -75,6 +76,11 @@ class ShopAdapter : RecyclerView.Adapter<ShopAdapter.MyVH>() {
 
             name.text = ware.name
             price.text = Utils.formatCurrency(ware.price.toInt())
+
+            if (!hashSet.contains(adapterPosition)) {
+                hashSet.add(adapterPosition)
+                counter.number = 0.toString()
+            }
 
         }
         override fun onClick(v: View?) {
