@@ -11,5 +11,8 @@ data class ArchiveParc(
     var wares: List<WareArchiveParc>,
     var date: String,
     var totalWares: Int,
-    var totalPrize: Int
+    var totalPrize: Int,
+    var check: Int,
+    var naghd: Int
+
 ) : Parcelable

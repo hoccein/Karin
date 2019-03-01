@@ -20,8 +20,8 @@ class MyApplication : MultiDexApplication() {
         val realmConfig = RealmConfiguration.Builder()
             .name("mydb.realm")
             .schemaVersion(1)
-//            .deleteRealmIfMigrationNeeded()
-            .migration(MyMigration())
+            .deleteRealmIfMigrationNeeded()
+//            .migration(MyMigration())
             .build()
         Realm.setDefaultConfiguration(realmConfig)
     }

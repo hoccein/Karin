@@ -11,11 +11,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.ScrollView
+import android.widget.TextView
 import com.itextpdf.text.Document
 import com.itextpdf.text.pdf.PdfWriter
 import com.kordloo.hosein.ynwa.karin.adapter.FactorAdapter
 import com.kordloo.hosein.ynwa.karin.db.ArchiveDAO
+import com.kordloo.hosein.ynwa.karin.dialog.InputDialogFragment
 import com.kordloo.hosein.ynwa.karin.model.*
 import com.kordloo.hosein.ynwa.karin.util.Keys
 import com.kordloo.hosein.ynwa.karin.util.Toaster
@@ -32,6 +35,9 @@ class FactorActivity : AppCompatActivity() {
     private var archiveDAO = ArchiveDAO()
     private var finalOrder = FinalOrder()
     private val adapter = FactorAdapter()
+    private var inputDialog: InputDialogFragment? = null
+    private var checkPrize: Int? = null
+    private var naghdPrize: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +63,10 @@ class FactorActivity : AppCompatActivity() {
             date(archive.date)
             totalWares(archive.totalWares)
             totalPrize(archive.totalPrize)
+            if (archive.check > 0)
+                checkPrize(archive.check)
+            if (archive.naghd > 0)
+                naghdPrize(archive.naghd)
         }
         else {
             finalOrder = intent.getParcelableExtra(Keys.REGISTER_ORDER)
@@ -69,11 +79,11 @@ class FactorActivity : AppCompatActivity() {
 
 
         tvCheckPrize.setOnClickListener {
-//            onCheckPrize()
+            inputDialog(getString(R.string.checkPrice), tvCheckPrize)
         }
 
         tvNaghdPrize.setOnClickListener {
-//            onNaghdPrize()
+            inputDialog(getString(R.string.naghdPrice), tvNaghdPrize)
         }
 
         btnRegister.visibility = if (type == 2000)
@@ -118,6 +128,16 @@ class FactorActivity : AppCompatActivity() {
         tvTotalPrize.text = "مبلغ کل :  $total تومان "
     }
 
+    private fun checkPrize(check: Int, title: String = getString(R.string.checkPrice)) {
+        checkPrize = check
+        tvCheckPrize.text = "$title:  ${Utils.formatCurrency(check)}  تومان"
+    }
+
+    private fun naghdPrize(naghd: Int, title: String = getString(R.string.naghdPrice)) {
+        naghdPrize = naghd
+        tvNaghdPrize.text = "$title:  ${Utils.formatCurrency(naghd)}  تومان"
+    }
+
     private fun saveToDB() {
         val wareNames = RealmList<String>()
         val warePrices = RealmList<String>()
@@ -127,6 +147,11 @@ class FactorActivity : AppCompatActivity() {
             warePrices.add(fo.Ware.price)
             wareCounts.add(fo.count)
         }
+        if (checkPrize == null)
+            checkPrize = 0
+        if (naghdPrize == null)
+            naghdPrize = 0
+
         val archive = Archive(0,
             finalOrder.customer.id,
             finalOrder.customer.name,
@@ -137,7 +162,9 @@ class FactorActivity : AppCompatActivity() {
             wareCounts,
             finalOrder.date,
             finalOrder.totalWares,
-            finalOrder.totalPrize)
+            finalOrder.totalPrize,
+            checkPrize!!,
+            naghdPrize!!)
         archiveDAO.save(archive)
     }
 
@@ -194,6 +221,37 @@ class FactorActivity : AppCompatActivity() {
     private fun goToHome() {
         startActivity(Intent(this, HomeActivity::class.java))
         finish()
+    }
+
+    private fun inputDialog(title: String, textView: TextView) {
+        val b = Bundle()
+        b.putString("key_title", title)
+        inputDialog = InputDialogFragment()
+        inputDialog?.arguments = b
+        val tag = "referral_dialog"
+        val fm = supportFragmentManager
+        val transaction = fm.beginTransaction()
+        val fragment = fm.findFragmentByTag(tag)
+        if (fragment != null)
+            transaction.remove(fragment)
+
+        transaction.addToBackStack(null)
+        inputDialog?.show(transaction, tag)
+
+        inputDialog?.setItemListenerInput(object: OnShopItemListener<Boolean, String> {
+            override fun onClick(isOk: Boolean, input: String) {
+                if (isOk) {
+                    inputDialog?.dismiss()
+                    if (textView == tvCheckPrize)
+                        checkPrize(input.toInt(), title)
+                    else
+                        naghdPrize(input.toInt(), title)
+                }
+                else {
+                    inputDialog?.dismiss()
+                }
+            }
+        })
     }
 
     override fun onDestroy() {

@@ -39,7 +39,7 @@ class ArchiveListActivity : AppCompatActivity() {
 
                 val archiveParc =
                     ArchiveParc(archive.customerId, archive.customerName, archive.customerPhone,
-                    wareList, archive.date, archive.totalWares, archive.totalPrize)
+                    wareList, archive.date, archive.totalWares, archive.totalPrize, archive.check, archive.naghd)
 
                val i = Intent(this@ArchiveListActivity, FactorActivity::class.java)
                 i.putExtra("ArchiveListActivity", 2000)

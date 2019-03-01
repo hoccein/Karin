@@ -7,4 +7,6 @@
     <string name="errorName">نام نباید خالی باشد</string>
     <string name="errorPhone">شماره تلفن نباید خالی باشد</string>
     <string name="register">ثبت</string>
+    <string name="checkPrice">مبلغ چک</string>
+    <string name="naghdPrice">مبلغ نقد</string>
 </resources>

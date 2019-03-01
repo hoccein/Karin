@@ -197,7 +197,7 @@
                         android:layout_marginLeft="16dp"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:text="مبلغ چک :                                                    "/>
+                        android:text="@string/checkPrice"/>
 
                 <TextView
                         android:id="@+id/tvNaghdPrize"
@@ -209,7 +209,7 @@
                         android:layout_marginLeft="16dp"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:text="مبلغ نقد :                                                    "/>
+                        android:text="@string/naghdPrice"/>
 
                 <TextView
                         android:id="@+id/txtZemanat"

@@ -1,25 +1,23 @@
 package com.kordloo.hosein.ynwa.karin.util
 
 import android.content.Context
-import android.net.Uri
-import android.provider.MediaStore
-import android.widget.ImageView
-import com.kordloo.hosein.ynwa.karin.MyApplication
-import com.kordloo.hosein.ynwa.karin.R
-import com.squareup.picasso.Picasso
-import java.text.DecimalFormat
-import com.itextpdf.text.DocumentException
-import com.itextpdf.text.BadElementException
-import com.itextpdf.text.Document
-import com.itextpdf.text.Image
-import java.io.IOException
-import java.net.MalformedURLException
-import android.graphics.drawable.Drawable
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.opengl.ETC1.getHeight
+import android.net.Uri
+import android.provider.MediaStore
 import android.view.View
+import android.widget.ImageView
+import com.itextpdf.text.BadElementException
+import com.itextpdf.text.Document
+import com.itextpdf.text.DocumentException
+import com.itextpdf.text.Image
+import com.kordloo.hosein.ynwa.karin.MyApplication
+import com.kordloo.hosein.ynwa.karin.R
+import com.squareup.picasso.Picasso
+import java.io.IOException
+import java.net.MalformedURLException
+import java.text.DecimalFormat
 
 
 class Utils {
@@ -123,7 +121,7 @@ class Utils {
                 e.printStackTrace()
             }
 
-             image?.scaleAbsolute(Utils.getWidth().toFloat()/2, Utils.getHeight().toFloat()/2)
+            image?.scaleAbsolute(Utils.getWidth().toFloat() / 2, Utils.getHeight().toFloat() / 2)
             try {
                 document.add(image)
             } catch (e: DocumentException) {

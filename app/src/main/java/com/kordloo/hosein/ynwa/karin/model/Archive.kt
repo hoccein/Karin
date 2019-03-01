@@ -16,9 +16,11 @@ open class Archive(
     var waresCount: RealmList<Int>,
     var date: String,
     var totalWares: Int,
-    var totalPrize: Int
+    var totalPrize: Int,
+    var check: Int,
+    var naghd: Int
 ) : RealmObject() {
     constructor(): this(customerId = 0, customerName = "", customerPhone = "",
         waresName = RealmList(), waresCount = RealmList(),waresPrice = RealmList(),
-        date = "", totalPrize = 0, totalWares = 0)
+        date = "", totalPrize = 0, totalWares = 0, naghd = 0, check = 0)
 }
